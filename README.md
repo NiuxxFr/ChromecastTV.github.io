@@ -3,93 +3,93 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ultimate Cast Controller</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Universal Cast Controller</title>
     <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script>
     <style>
-        :root { --p: #6200ee; --s: #03dac6; --bg: #0a0a0a; --card: #1a1a1a; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #fff; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
+        :root { --accent: #00e676; --bg: #090909; --card: #151515; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #eee; margin: 0; padding: 15px; }
         
-        /* Header y Vinculación */
-        .header { width: 100%; background: var(--card); padding: 20px; border-radius: 20px; text-align: center; margin-bottom: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
-        google-cast-launcher { width: 50px; height: 50px; --connected-color: var(--s); cursor: pointer; }
-
-        /* Vista Previa Real */
-        .preview-container { width: 100%; max-width: 400px; aspect-ratio: 16/9; background: #000; border-radius: 15px; overflow: hidden; margin-bottom: 15px; border: 2px solid #333; position: relative; }
-        #localPlayer { width: 100%; height: 100%; object-fit: contain; }
-        .preview-label { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.6); padding: 2px 8px; border-radius: 5px; font-size: 10px; color: var(--s); border: 1px solid var(--s); }
+        /* Panel de Conexión */
+        .header { background: var(--card); padding: 20px; border-radius: 25px; text-align: center; margin-bottom: 15px; border: 1px solid #222; }
+        google-cast-launcher { width: 45px; height: 45px; background: #222; border-radius: 50%; padding: 10px; cursor: pointer; }
+        
+        /* Pantalla de Preview */
+        .display-screen { width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 15px; margin-bottom: 15px; position: relative; overflow: hidden; border: 2px solid #333; }
+        #localPreview { width: 100%; height: 100%; object-fit: contain; }
+        .badge { position: absolute; top: 10px; left: 10px; background: rgba(0,230,118,0.2); color: var(--accent); padding: 4px 10px; border-radius: 5px; font-size: 10px; border: 1px solid var(--accent); }
 
         /* Control Remoto */
-        .remote-control { width: 100%; max-width: 400px; background: var(--card); border-radius: 25px; padding: 20px; box-sizing: border-box; }
-        .track-info { text-align: center; margin-bottom: 15px; font-weight: bold; color: var(--s); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        
-        .progress-area { margin-bottom: 20px; }
-        input[type="range"] { width: 100%; accent-color: var(--p); }
-        .time-labels { display: flex; justify-content: space-between; font-size: 12px; color: #888; margin-top: 5px; }
+        .remote { background: var(--card); border-radius: 30px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        .info { text-align: center; margin-bottom: 20px; }
+        #fileName { font-weight: bold; font-size: 14px; color: var(--accent); }
 
-        .main-controls { display: flex; justify-content: space-around; align-items: center; margin-bottom: 20px; }
-        .btn-circle { width: 60px; height: 60px; border-radius: 50%; border: none; background: #333; color: white; font-size: 24px; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
-        .btn-circle:active { transform: scale(0.9); background: var(--p); }
-        .play-btn { width: 80px; height: 80px; background: var(--p); font-size: 30px; }
+        .timeline { margin-bottom: 20px; }
+        input[type="range"] { width: 100%; accent-color: var(--accent); height: 8px; border-radius: 5px; }
+        .times { display: flex; justify-content: space-between; font-size: 11px; color: #777; margin-top: 8px; }
 
-        .volume-area { display: flex; align-items: center; gap: 10px; background: #222; padding: 10px 15px; border-radius: 50px; }
-        
-        /* Botones de Selección */
-        .file-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; max-width: 400px; margin-top: 15px; }
-        .sel-btn { background: #252525; border: 1px solid #444; color: white; padding: 15px; border-radius: 15px; font-weight: bold; display: flex; flex-direction: column; align-items: center; gap: 5px; }
-        .sel-btn:active { border-color: var(--s); }
+        .playback-keys { display: flex; justify-content: center; align-items: center; gap: 25px; margin-bottom: 25px; }
+        .btn-main { width: 70px; height: 70px; border-radius: 50%; border: none; background: var(--accent); color: #000; font-size: 28px; font-weight: bold; }
+        .btn-sec { width: 50px; height: 50px; border-radius: 50%; border: none; background: #222; color: #fff; font-size: 20px; }
+
+        .vol-control { display: flex; align-items: center; gap: 15px; background: #1a1a1a; padding: 12px 20px; border-radius: 40px; }
+
+        /* Selectores de Archivo */
+        .footer-tools { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+        .tool-btn { background: #1a1a1a; border: 1px solid #333; color: white; padding: 15px; border-radius: 15px; font-size: 12px; font-weight: bold; }
     </style>
 </head>
 <body>
 
     <div class="header">
         <google-cast-launcher></google-cast-launcher>
-        <div id="cast-status" style="font-size: 12px; margin-top: 5px; color: #888;">Toca para vincular TV</div>
+        <div id="status" style="font-size: 11px; color: #666; margin-top: 8px;">DISPOSITIVO NO VINCULADO</div>
     </div>
 
-    <div class="preview-container">
-        <div class="preview-label">VISTA PREVIA MÓVIL</div>
-        <video id="localPlayer" playsinline muted></video>
+    <div class="display-screen">
+        <div class="badge">LIVE PREVIEW</div>
+        <video id="localPreview" muted playsinline></video>
     </div>
 
-    <div class="remote-control">
-        <div id="trackName" class="track-info">Ningún archivo seleccionado</div>
-        
-        <div class="progress-area">
-            <input type="range" id="progressBar" value="0" step="1">
-            <div class="time-labels">
-                <span id="currTime">00:00</span>
-                <span id="totalTime">00:00</span>
+    <div class="remote">
+        <div class="info">
+            <div id="fileName">Esperando archivo...</div>
+        </div>
+
+        <div class="timeline">
+            <input type="range" id="seekSlider" value="0" min="0" step="1">
+            <div class="times">
+                <span id="currentTime">00:00</span>
+                <span id="totalDuration">00:00</span>
             </div>
         </div>
 
-        <div class="main-controls">
-            <button class="btn-circle" onclick="seekRelative(-10)">⏪</button>
-            <button class="btn-circle play-btn" id="playPauseBtn" onclick="togglePlay()">▶️</button>
-            <button class="btn-circle" onclick="seekRelative(10)">⏩</button>
+        <div class="playback-keys">
+            <button class="btn-sec" onclick="mediaControl('rewind')">↺</button>
+            <button class="btn-main" id="playBtn" onclick="mediaControl('play')">▶</button>
+            <button class="btn-sec" onclick="mediaControl('forward')">↻</button>
         </div>
 
-        <div class="volume-area">
+        <div class="vol-control">
             <span>🔈</span>
-            <input type="range" id="volumeBar" min="0" max="100" value="50" oninput="setVolume(this.value)">
+            <input type="range" id="volSlider" min="0" max="100" value="50" oninput="changeVolume(this.value)">
             <span>🔊</span>
         </div>
     </div>
 
-    <div class="file-selector">
-        <button class="sel-btn" onclick="document.getElementById('f-audio').click()">
-            <span>🎵</span> AUDIO
-            <input type="file" id="f-audio" hidden accept="audio/*" onchange="handleMedia(this)">
+    <div class="footer-tools">
+        <button class="tool-btn" onclick="document.getElementById('pick-video').click()">🎬 TRANSMITIR VIDEO
+            <input type="file" id="pick-video" hidden accept="video/*" onchange="loadMedia(this)">
         </button>
-        <button class="sel-btn" onclick="document.getElementById('f-video').click()">
-            <span>🎬</span> VIDEO
-            <input type="file" id="f-video" hidden accept="video/*" onchange="handleMedia(this)">
+        <button class="tool-btn" onclick="document.getElementById('pick-audio').click()">🎵 TRANSMITIR AUDIO
+            <input type="file" id="pick-audio" hidden accept="audio/*" onchange="loadMedia(this)">
         </button>
     </div>
 
     <script>
-        let castSession, player, controller, localPlayer;
+        let castSession, player, controller, currentMediaURL;
 
+        // Inicialización del Motor de Google Cast
         window.__onGCastApiAvailable = function(isAvailable) {
             if (isAvailable) {
                 const context = cast.framework.CastContext.getInstance();
@@ -100,72 +100,77 @@
 
                 player = new cast.framework.RemotePlayer();
                 controller = new cast.framework.RemotePlayerController(player);
-                localPlayer = document.getElementById('localPlayer');
 
-                // Sincronización automática de controles
-                controller.addEventListener(cast.framework.RemotePlayerEventType.ANY_CHANGE, (e) => {
-                    document.getElementById('progressBar').max = player.duration;
-                    document.getElementById('progressBar').value = player.currentTime;
-                    document.getElementById('currTime').innerText = formatTime(player.currentTime);
-                    document.getElementById('totalTime').innerText = formatTime(player.duration);
-                    document.getElementById('playPauseBtn').innerText = player.isPaused ? "▶️" : "⏸️";
+                // Escuchar cambios en la TV y reflejarlos en el móvil
+                controller.addEventListener(cast.framework.RemotePlayerEventType.ANY_CHANGE, () => {
+                    document.getElementById('seekSlider').max = player.duration;
+                    document.getElementById('seekSlider').value = player.currentTime;
+                    document.getElementById('currentTime').innerText = formatTime(player.currentTime);
+                    document.getElementById('totalDuration').innerText = formatTime(player.duration);
+                    document.getElementById('playBtn').innerText = player.isPaused ? "▶" : "⏸";
                 });
             }
         };
 
-        async function handleMedia(input) {
+        async function loadMedia(input) {
             const file = input.files[0];
             if (!file) return;
 
-            const session = cast.framework.CastContext.getInstance().getCurrentSession();
-            if (!session) {
-                alert("Primero vincula la TV con el botón de arriba");
+            castSession = cast.framework.CastContext.getInstance().getCurrentSession();
+            if (!castSession) {
+                alert("Brother, primero vincula la TV con el botón de arriba.");
                 return;
             }
 
-            const url = URL.createObjectURL(file);
-            document.getElementById('trackName').innerText = file.name;
-
-            // Iniciar vista previa local
-            localPlayer.src = url;
+            document.getElementById('fileName').innerText = "Procesando: " + file.name;
+            
+            // Creamos la URL del archivo
+            currentMediaURL = URL.createObjectURL(file);
+            
+            // Preview Local
+            const localPlayer = document.getElementById('localPreview');
+            localPlayer.src = currentMediaURL;
             localPlayer.play();
 
-            // Enviar a Chromecast
-            const mediaInfo = new chrome.cast.media.MediaInfo(url, file.type);
+            // Configurar Metadata para la TV
+            const mediaInfo = new chrome.cast.media.MediaInfo(currentMediaURL, file.type);
             mediaInfo.metadata = new chrome.cast.media.GenericMediaMetadata();
             mediaInfo.metadata.title = file.name;
-            
+            mediaInfo.metadata.images = [{url: 'https://cdn-icons-png.flaticon.com/512/3159/3159461.png'}];
+
             const request = new chrome.cast.media.LoadRequest(mediaInfo);
             
             try {
-                await session.loadMedia(request);
-                console.log("Carga exitosa en TV");
+                await castSession.loadMedia(request);
+                document.getElementById('status').innerText = "TRANSMITIENDO AHORA";
             } catch (e) {
-                console.error("Error: Probablemente bloqueo de red local.", e);
-                alert("Error de conexión. Asegúrate de usar HTTPS y estar en la misma red.");
+                console.error(e);
+                alert("Error: El Chromecast no puede acceder al archivo local. Mira la nota abajo.");
             }
         }
 
-        function togglePlay() { controller.playOrPause(); }
-        function setVolume(v) { player.volumeLevel = v / 100; controller.setVolumeLevel(); }
-        function seekRelative(sec) {
-            let newTime = player.currentTime + sec;
-            player.currentTime = newTime;
-            controller.seek();
+        function mediaControl(action) {
+            if (action === 'play') controller.playOrPause();
+            if (action === 'rewind') { player.currentTime -= 10; controller.seek(); }
+            if (action === 'forward') { player.currentTime += 10; controller.seek(); }
         }
 
-        function formatTime(s) {
-            if (isNaN(s)) return "00:00";
-            const m = Math.floor(s / 60);
-            const sec = Math.floor(s % 60);
-            return `${m.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
+        function changeVolume(v) {
+            player.volumeLevel = v / 100;
+            controller.setVolumeLevel();
         }
 
-        // Sincronizar barra de progreso al arrastrar
-        document.getElementById('progressBar').oninput = function() {
+        document.getElementById('seekSlider').oninput = function() {
             player.currentTime = this.value;
             controller.seek();
         };
+
+        function formatTime(s) {
+            if (!s) return "00:00";
+            let min = Math.floor(s / 60);
+            let sec = Math.floor(s % 60);
+            return `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
+        }
     </script>
 </body>
 </html>
